@@ -17,6 +17,8 @@ Chart.register(ChartStreaming)
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
+
+  chart: any;
   title = 'triggers';
   data: any =
     {
@@ -24,19 +26,21 @@ export class AppComponent implements OnInit {
       datasets: [
         {
           label: 'work',
+          backgroundColor: '#3e95cd',
           borderColor: '#3e95cd',
-          data: [],
-          fill: false
+          borderWidth: 1,
+          data: []
         },
         {
           label: 'idle',
+          backgroundColor: "#8e5ea2",
           borderColor: "#8e5ea2",
+          borderWidth: 1,
           data: [],
-          fill: false
         }
       ]
     }
-    activeLine: number = 0;
+  activeLine: number = 0;
 
 
   ngOnInit(): void {
@@ -48,7 +52,7 @@ this.getVideoStream();
 
     const onRefresh = (chart: any) => {
       const now = Date.now();
-      const lineCount = this.activeLine === 0 ? 1 : 2;
+      const lineCount = this.activeLine === 0 ? -1 : 1;
       console.log(this.data.datasets[0])
 
       this.data.datasets[this.activeLine].data.push({
@@ -58,29 +62,36 @@ this.getVideoStream();
     };
 
     const canv = document.getElementById('canv');
+    // @ts-ignore
+
     const config = {
-      type: 'line',
+      type: 'bar',
       data: this.data,
       options: {
         plugins: {
           title: {
             display: true,
-            text: 'Person working or not'
-          }
+            text: 'person working or not'
+          },
         },
+        barPercentage: 1.0,
+        categoryPercentage: 1.0,
+        responsive: true,
         scales: {
           x: {
+            stacked: true,
             type: 'realtime',
             realtime: {
               duration: 20000,
-              refresh: 2000,
-              delay: 2000,
+              refresh: 1000,
+              delay: 500,
               onRefresh: onRefresh
             }
           },
           y: {
-            min: 0,
-            max: 4,
+            stacked: true,
+            min: -1,
+            max: 1,
             ticks: {
               // forces step size to be 50 units
               stepSize: 1
@@ -94,20 +105,12 @@ this.getVideoStream();
     };
 
     // @ts-ignore
-    new Chart(canv, config);
+    this.chart = new Chart(canv, config);
 
   }
 
   changeActiveLine() {
     this.activeLine = this.activeLine === 0 ? 1 : 0;
-    console.log(this.activeLine)
-    console.log(this.data.datasets[0].data);
-    if (this.activeLine === 0) {
-      setTimeout(() => {
-        this.data.datasets[0].data.pop()
-        console.log('TIMEOUT WORKED')
-      }, 2000)
-    }
   }
 
   getVideoStream() {
