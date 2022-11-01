@@ -104,9 +104,11 @@ this.getVideoStream();
       }
     };
 
-    // @ts-ignore
-    this.chart = new Chart(canv, config);
-
+    setTimeout(()=>{
+      // @ts-ignore
+      this.chart = new Chart(canv, config);
+    },1000)
+    
   }
 
   changeActiveLine() {
@@ -118,13 +120,18 @@ this.getVideoStream();
     const canvasElement:any = document.getElementsByClassName('output_canvas')[0];
     const canvasCtx = canvasElement.getContext('2d');
     
+    let mediaStream = null
+    navigator.mediaDevices.getUserMedia({audio: false, video: true}).then((stream:any)=>{ 
+      
+      videoElement.srcObject = stream
+      mediaStream = stream//проверка на включение камеры
+  })
+
     function onResults(results:any) {
-      console.log(results.poseLandmarks)
-      let allVisibleLandmarks = results.poseLandmarks?.map((el:any)=>el.visibility>0.0001?{...el, visibility:1}:el)
+      let allVisibleLandmarks = results.poseLandmarks?.map((el:any)=>el.visibility>0.002?{...el, visibility:1}:el)
                                                                     .map((e:any,index:number)=>(index>10 && index<17) || (index>22)?e:{...e, visibility:0})
     canvasCtx.save();
     canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
-  
     // Only overwrite existing pixels.
     canvasCtx.globalCompositeOperation = 'source-in';
     canvasCtx.fillStyle = '#00FF00';
@@ -139,15 +146,15 @@ this.getVideoStream();
     drawConnectors(canvasCtx, allVisibleLandmarks, POSE_CONNECTIONS,
                    {color: 'white', lineWidth: 5});
     drawLandmarks(canvasCtx, allVisibleLandmarks,
-                  {color: 'yellow', lineWidth: 3});
+                  {color: 'yellow', radius: 10});
     drawConnectors(canvasCtx, results.leftHandLandmarks, HAND_CONNECTIONS,
-                   {color: 'bisque', lineWidth: 2});
+                   {color: 'bisque', lineWidth: 4});
     drawLandmarks(canvasCtx, results.leftHandLandmarks,
-                  {color: 'orange', lineWidth: 1});
+                  {color: 'orange', radius: 4});
     drawConnectors(canvasCtx, results.rightHandLandmarks, HAND_CONNECTIONS,
-                   {color: 'aqua', lineWidth: 2});
+                   {color: 'aqua', lineWidth: 4});
     drawLandmarks(canvasCtx, results.rightHandLandmarks,
-                  {color: 'gold', lineWidth: 1});
+                  {color: 'gold', radius: 4});
     canvasCtx.restore();
   }
   
@@ -161,18 +168,18 @@ this.getVideoStream();
     enableSegmentation: false,
     smoothSegmentation: true,
     refineFaceLandmarks: false,
-    minDetectionConfidence: 0.5,
-    minTrackingConfidence: 0.5
+    minDetectionConfidence: 0.3,
+    minTrackingConfidence: 0.3
   });
   holistic.onResults(onResults);
   
   const camera = new Camera(videoElement, {
     onFrame: async () => {
-      await holistic.send({image: videoElement});
+       await holistic.send({image: videoElement});
     },
     width: 1280,
     height: 720
-  });
+  })
   camera.start();
   }
 
