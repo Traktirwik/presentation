@@ -1,0 +1,22 @@
+.wrapper {
+  width: 100%;
+  height: 100%;
+  padding: 16px;
+  position: absolute;
+
+  .window-containers {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: 50% 50%;
+    grid-gap: 5px;
+  }
+
+  .container {
+    border: 1px solid black;
+    background-color: #CCCCCC;
+  }
+}
+
+
