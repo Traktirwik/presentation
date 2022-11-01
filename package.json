@@ -22,6 +22,7 @@
     "@mediapipe/drawing_utils": "^0.3.1620248257",
     "@mediapipe/hands": "^0.4.1646424915",
     "@mediapipe/holistic": "^0.5.1635989137",
+    "@swimlane/ngx-charts": "^20.1.0",
     "chartjs-adapter-moment": "^1.0.0",
     "chartjs-plugin-annotation": "^2.0.1",
     "chartjs-plugin-streaming": "^2.0.0",
