@@ -1,5 +1,5 @@
-import { Injectable, NgZone } from '@angular/core';
-import {Chart, registerables} from "chart.js";
+import { Injectable } from '@angular/core';
+import {Chart} from "chart.js";
 
 @Injectable({
   providedIn: 'root'
@@ -7,29 +7,25 @@ import {Chart, registerables} from "chart.js";
 
 export class CircleService {
   chart: any;
-  counter:any = 1
+  counter:any = 0
   myDoughnutChart: any;
   data = {
     datasets: [
         {
-          data: [this.counter, 10 - this.counter],
-          borderColor: ['#333', '#333'],  
+          data: [0, 10],
+          borderWidth:0, 
           backgroundColor: [
-                "#2b9f1c",
-                "#3866c2",
+                "#02A5FF",
+                "#D9D9D9",
             ],
             hoverBackgroundColor: [
-                "#FF4394",
-                "#36A2EB",
+                "blue",
+                "white",
             ]
-            
-            
         }]
 };
   
-  constructor(
-    private zone: NgZone
-  ) { 
+  constructor() { 
   }
   drawGraph(){
     
@@ -39,6 +35,8 @@ this.myDoughnutChart = new Chart(document.getElementById('circle'), {
   data: this.data,
   options: {
   	responsive: true,
+    radius:'85%',
+    cutout:'80%',
     legend: {
       display: false
     }
@@ -49,31 +47,30 @@ this.myDoughnutChart = new Chart(document.getElementById('circle'), {
     }
 }]
 
-
 });
 };
 befDraw(chart:any) {
-  var width = chart.width,
+  const width = chart.width,
       height = chart.height,
       ctx =chart.ctx;
 
   ctx.restore();
-  var fontSize = (height / 114).toFixed(2);
+  const fontSize = (height / 114).toFixed(2);
   ctx.font = fontSize + "em sans-serif";
   ctx.textBaseline = "middle";
 
-  var text = this.counter,
+  const text = `${this.counter<10?this.counter:10}/10`,
       textX = Math.round((width - ctx.measureText(text).width) / 2),
       textY = height / 2;
 
   ctx.fillText(text, textX, textY);
   ctx.save();
 }
+
 changeCount(){
     this.counter += 1
-    this.data.datasets[0].data = [this.counter, 10 - this.counter]
-  
-  this.myDoughnutChart.update()
+    this.data.datasets[0].data = this.counter<10?[this.counter, 10 - this.counter]:[10, 0]
+    this.myDoughnutChart.update()
     //@ts-ignore
 }
 }
