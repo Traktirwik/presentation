@@ -1,8 +1,14 @@
+
 <div class="wrapper">
+  <header class="header">
+    <span class="title">
+      <span class="title-gray">Workplace:</span>
+      &nbsp;Warsaw Industry Week</span>
+  </header>
   <div class="window-containers">
     <div class="container">
       <canvas id="circle" class="circle">
-       
+
       </canvas>
       <button (click)="changeCount()" style="width: 60px; height: 40px" class="changeButton">change line</button>
     </div>
@@ -35,7 +41,7 @@
     </div>
     <div class="container" [ngClass]="'productivity'">
       <div class="chart-title-container">
-        Safety compliance
+        Productivity
       </div>
       <div class="chart-content-container">
         <div class="dataset-title-container" *ngFor="let chart of productivityChart">

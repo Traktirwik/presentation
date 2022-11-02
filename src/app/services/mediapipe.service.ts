@@ -46,8 +46,9 @@ export class MediapipeService {
     const camera = new Camera(videoElement, {
       onFrame: async () => {
         await holistic.send({image: videoElement});
-      }
-
+      },
+      width: 1000,
+      height: 600
     })
     camera.start();
   }
