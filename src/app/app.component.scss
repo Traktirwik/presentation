@@ -30,13 +30,14 @@
   }
 
   .window-containers {
-    padding: 30px 20px 32px;
+    padding: 30px 20px 0;
     box-sizing: border-box;
     width: calc(100% - 60px);
-    height: calc(100% - 82px);
+    height: 100%;
+    max-height: 90vh;
     display: grid;
     grid-template-columns: 40% 5% 5% 50%;
-    grid-template-rows: 65% 35%;
+    grid-template-rows: 58% 42%;
     grid-gap: 20px;
   }
 
@@ -79,9 +80,10 @@
 
 
     &.safety-compliance, &.productivity {
-      padding: 10px;
+      padding: 20px;
       display: flex;
       flex-direction: column;
+      box-sizing: border-box;
       .chart-title-container {
         margin-bottom: 10px;
         font-family: 'Roboto';
@@ -94,7 +96,7 @@
       .chart-content-container {
         display: flex;
         gap: 70px;
-        margin-bottom: 25px;
+        margin-bottom: 5px;
         .dataset-title-container {
 
           .names-container {
@@ -135,9 +137,8 @@
       }
 
       .chart-container {
-        height:200px;
-        width:570px;
-        //position: relative;
+        height: 200px;
+        width: 600px;
       }
 
       .chart-button {
