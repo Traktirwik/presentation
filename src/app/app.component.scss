@@ -5,29 +5,124 @@
   height: 100vh;
   max-height: 100vh;
   box-sizing: border-box;
-  
+
   .window-containers {
     box-sizing: border-box;
     width: calc(100% - 10px);
     height: calc(100% - 10px);
     display: grid;
-    grid-template-columns: 50% 50%;
+    grid-template-columns: 40% 5% 5% 50%;
     grid-template-rows: 50% 50%;
-    grid-gap: 5px;
+    grid-gap: 20px;
   }
 
   .container {
-    border: 1px solid black;
-    background-color: #CCCCCC;
+    background-color: #FFFFFF;
     position: relative;
-    .output_canvas{
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    border-radius: 20px;
+
+    &.operation-counter {
+      grid-column-start: 1;
+      grid-column-end: 2;
+    }
+
+    &.video {
+      grid-column-start: 2;
+      grid-column-end: 5;
+    }
+
+    &.safety-compliance {
+      grid-column-start: 1;
+      grid-column-end: 3;
+    }
+
+    &.productivity {
+      grid-column-start: 3;
+      grid-column-end: 5;
+    }
+
+
+    &.safety-compliance, &.productivity {
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      .chart-title-container {
+        margin-bottom: 10px;
+        font-family: 'Roboto';
+        font-style: normal;
+        font-weight: 600;
+        font-size: 20px;
+        line-height: 23px;
+      }
+
+      .chart-content-container {
+        display: flex;
+        gap: 70px;
+        margin-bottom: 25px;
+        .dataset-title-container {
+
+          .names-container {
+            font-family: 'Roboto';
+            font-style: normal;
+            font-weight: 500;
+            font-size: 14px;
+            line-height: 24px;
+            color: #9E9E9E;
+          }
+
+          .timing-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            .dataset-icon {
+              width: 10px;
+              height: 10px;
+
+              &.Compliance {
+                background-color: #469F15;
+              }
+              &.Violation {
+                background-color: #DB2820;
+              }
+            }
+            .dataset-time {
+              &.Compliance {
+                color: #469F15;
+              }
+              &.Violation {
+                color: #DB2820;
+              }
+            }
+          }
+
+        }
+      }
+
+      .chart-container {
+        height:200px;
+        width:570px;
+        //position: relative;
+      }
+
+      .chart-button {
+        width: 60px;
+        height: 40px;
+        align-self: flex-end;
+      }
+    }
+
+    .qwe {
       width: 100%;
-      height: 90%;
+      height: 100%;
+      .output_canvas{
+        position: relative;
+        width: 100%;
+        height: 100%;
+      }
     }
-    .changeButton{
-      position: absolute;
-      bottom:0;
-    }
+
+
   }
 }
 

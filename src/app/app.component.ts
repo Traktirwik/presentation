@@ -19,7 +19,8 @@ import {ChartService} from "./services/chart.service";
 })
 export class AppComponent implements OnInit, AfterViewInit {
   title = 'triggers';
-
+  safetyChart: any;
+  productivityChart: any;
 
   constructor(
     private mediaPipeService: MediapipeService,
@@ -30,10 +31,19 @@ export class AppComponent implements OnInit, AfterViewInit {
 
 
   ngOnInit(): void {
+    this.chartService.getSafetyChart.subscribe((data: any) => {
+      this.safetyChart = data;
+    })
+
+    this.chartService.getProductivityChart.subscribe((data: any) => {
+      this.productivityChart = data;
+    })
+
+
   }
 
-  changeActiveLine() {
-    this.chartService.changeActiveLine();
+  changeActiveDataSet(chart: 'safety' | 'productivity') {
+    this.chartService.changeActiveDataSet(chart);
   }
 
   ngAfterViewInit(): void {
