@@ -6,6 +6,7 @@ import {Camera} from "@mediapipe/camera_utils";
 @Injectable({
   providedIn: 'root'
 })
+
 export class MediapipeService {
 
   ctx: any;
@@ -77,11 +78,11 @@ export class MediapipeService {
     drawLandmarks(this.ctx, allVisibleLandmarks,
       {color: 'yellow', radius: 10});
     drawConnectors(this.ctx, results.leftHandLandmarks, HAND_CONNECTIONS,
-      {color: 'bisque', lineWidth: 4});
+      {color: 'white', lineWidth: 4});
     drawLandmarks(this.ctx, results.leftHandLandmarks,
       {color: 'orange', radius: 4});
     drawConnectors(this.ctx, results.rightHandLandmarks, HAND_CONNECTIONS,
-      {color: 'aqua', lineWidth: 4});
+      {color: 'white', lineWidth: 4});
     drawLandmarks(this.ctx, results.rightHandLandmarks,
       {color: 'gold', radius: 4});
     this.ctx.restore();

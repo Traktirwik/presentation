@@ -21,7 +21,16 @@
     position: relative;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
     border-radius: 20px;
-
+    .circle{
+      max-width: 100%;
+      max-height: 100%;
+    }
+    #caption{
+      position: absolute;
+      top:50%;
+      left: calc(50% - 35px);
+    }
+    
     &.operation-counter {
       grid-column-start: 1;
       grid-column-end: 2;

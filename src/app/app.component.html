@@ -1,7 +1,10 @@
 <div class="wrapper">
   <div class="window-containers">
-    <div class="container" [ngClass]="'operation-counter'">
-
+    <div class="container">
+      <canvas id="circle" class="circle">
+       
+      </canvas>
+      <button (click)="changeCount()" style="width: 60px; height: 40px" class="changeButton">change line</button>
     </div>
     <div class="container" [ngClass]="'video'">
       <div class="container">

@@ -8,9 +8,7 @@ import ChartStreaming from 'chartjs-plugin-streaming';
 import {drawConnectors, drawLandmarks} from '@mediapipe/drawing_utils';
 import {MediapipeService} from "./services/mediapipe.service";
 import {ChartService} from "./services/chart.service";
-
-
-
+import { CircleService } from './services/circle.service';
 
 @Component({
   selector: 'app-root',
@@ -24,11 +22,10 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   constructor(
     private mediaPipeService: MediapipeService,
-    private chartService: ChartService
+    private chartService: ChartService,
+    private circleService: CircleService
   ) {
-
   }
-
 
   ngOnInit(): void {
     this.chartService.getSafetyChart.subscribe((data: any) => {
@@ -42,12 +39,18 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   }
 
+  changeCount() {
+    this.circleService.changeCount();
+  }
   changeActiveDataSet(chart: 'safety' | 'productivity') {
     this.chartService.changeActiveDataSet(chart);
   }
 
   ngAfterViewInit(): void {
+    this.circleService.drawGraph()
+    
     this.mediaPipeService.startPoseRecognition();
+
     setTimeout(() => {
       this.chartService.drawChart();
     }, 2000)
