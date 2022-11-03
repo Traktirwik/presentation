@@ -12,10 +12,11 @@ export class MediapipeService {
   ctx: any;
   canvasElement: any;
   device: any[] = [];
+  camera:any
   constructor() {
   }
 
-  startPoseRecognition() {
+  startPoseRecognition(idCamera:number) {
     const videoElement: any = document.querySelector('.input_video');
     this.canvasElement = document.querySelector('.output_canvas');
     this.ctx = this.canvasElement.getContext('2d');
@@ -27,20 +28,31 @@ export class MediapipeService {
       navigator.mediaDevices.enumerateDevices()
         .then((devices) => {
           devices.forEach((device) => {
-            this.device.push(device.deviceId);
-            console.log(device)
+            if(device.kind==='videoinput'){
+              this.device.push(device.deviceId);
+            }
           });
+        }).then(()=>{
+          navigator.mediaDevices.getUserMedia({audio: false, video: {deviceId:
+            { exact: this.device[idCamera] } //тут меняется вебка
+             }}).then((stream: any) => {
+            videoElement.srcObject = stream;
+          })
+        }).then(()=>{
+          this.camera = new Camera(videoElement, {
+            onFrame: async () => {
+              await holistic.send({image: videoElement});
+            },
+            width: 1280,
+            height: 720
+          })
+          this.camera.start();
         })
         .catch((err) => {
           console.log(`${err.name}: ${err.message}`);
         });
     }
-
-    navigator.mediaDevices.getUserMedia({audio: false, video: {deviceId: "218cfff2533651d7149bc13a9593927d384df528569062f92fa1c58e11d5bc65"}}).then((stream: any) => {
-      videoElement.srcObject = stream;
-    })
-
-   
+    
     const holistic = new Holistic({
       locateFile: (file) => {
         return `https://cdn.jsdelivr.net/npm/@mediapipe/holistic/${file}`;
@@ -57,18 +69,10 @@ export class MediapipeService {
       minDetectionConfidence: 0.3,
       minTrackingConfidence: 0.3
     });
+
     holistic.onResults((res) => {
       this.drawResult(res);
     });
-
-    const camera = new Camera(videoElement, {
-      onFrame: async () => {
-        await holistic.send({image: videoElement});
-      },
-      width: 1280,
-      height: 720
-    })
-    camera.start();
   }
 
   drawResult(results: any) {
@@ -105,5 +109,11 @@ export class MediapipeService {
     drawLandmarks(this.ctx, results.rightHandLandmarks,
       {color: 'yellow', radius: 3});
     this.ctx.restore();
+  }
+  changeCamera(idCamera:number){
+
+      this.camera.stop()
+
+    this.startPoseRecognition(idCamera)
   }
 }

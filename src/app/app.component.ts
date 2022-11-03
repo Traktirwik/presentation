@@ -39,6 +39,9 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   }
 
+  changeCam(){
+    this.mediaPipeService.changeCamera(0)
+  }
   changeCount() {
     this.circleService.changeCount();
   }
@@ -48,8 +51,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.circleService.drawGraph()
-    
-    this.mediaPipeService.startPoseRecognition();
+    this.mediaPipeService.startPoseRecognition(1);
 
     setTimeout(() => {
       this.chartService.drawChart();

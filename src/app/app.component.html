@@ -12,10 +12,14 @@
         &nbsp;Anchor bolt fixation</span>
       <canvas id="circle" class="circle">
       </canvas>
-      <button (click)="changeCount()" style="width: 60px; height: 40px; position: absolute; top:50px" class="changeButton">change line</button>
+      <button (click)="changeCam()" style="width: 60px; height: 40px; position: absolute; top:50px" class="changeButton">change line</button>
     </div>
     <div class="container" [ngClass]="'video'">
       <div class="container">
+        <select>
+          <option>Cam 1</option> 
+          <option>Cam 2</option> 
+        </select>
         <video class="input_video" style="display: none" ></video>
           <canvas class="output_canvas" width="1024px" height="720px"></canvas>
       </div>
