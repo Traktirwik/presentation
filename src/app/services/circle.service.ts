@@ -9,6 +9,7 @@ export class CircleService {
   chart: any;
   counter:any = 0
   myDoughnutChart: any;
+  progress:any = 0
   data = {
     datasets: [
         {
@@ -35,7 +36,7 @@ this.myDoughnutChart = new Chart(document.getElementById('circle'), {
   data: this.data,
   options: {
   	responsive: true,
-    radius:'85%',
+    radius:'80%',
     cutout:'90%',
     legend: {
       display: false
@@ -52,7 +53,7 @@ this.myDoughnutChart = new Chart(document.getElementById('circle'), {
 befDraw(chart:any) {
   const width = chart.width,
       height = chart.height,
-      ctx =chart.ctx;
+      ctx = chart.ctx;
   ctx.restore();
   const fontSize = (height / 70).toFixed(2);
   ctx.textBaseline = "middle";
@@ -61,7 +62,7 @@ befDraw(chart:any) {
   ctx.fillStyle = "#9E9E9E";
   const text2 = 'Count',
   textX2= Math.round((width - ctx.measureText(text2).width) / 2),
-  textY2 = height / 4.2;   
+  textY2 = height / 4;   
   ctx.fillText(text2, textX2, textY2);
 
   ctx.font = fontSize + "em sans-serif";
@@ -70,12 +71,24 @@ befDraw(chart:any) {
   textY = height / 2;
   ctx.fillStyle = "#02A5FF"; 
   ctx.fillText(text, textX, textY);
+
+  ctx.font = 1 + "em sans-serif";
+  const progres = `Progress: ${this.progress}`,
+  progresX = Math.round((width - ctx.measureText(progres).width) / 2),
+  progresY = height / 1.5;
+  ctx.fillStyle = "#02A5FF"; 
+  ctx.fillText(progres, progresX, progresY);
   ctx.save();
 }
 
 changeCount(){
     this.counter += 1
     this.data.datasets[0].data = this.counter<10?[this.counter, 10 - this.counter]:[10, 0]
+    this.progress = 0
     this.myDoughnutChart.update()
-  }
+}
+updateProgress(sum:any){
+  this.progress += sum
+  this.myDoughnutChart.update()
+}
 }

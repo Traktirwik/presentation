@@ -13,15 +13,16 @@
       <canvas id="circle" class="circle">
       </canvas>
       <button (click)="changeCount()" style="width: 60px; height: 40px; position: absolute; top:50px" class="changeButton">change line</button>
+      <button (click)="changeProgress(30)" style="width: 60px; height: 40px; position: absolute; top:100px" class="changeButton">progres</button>
     </div>
     <div class="container" [ngClass]="'video'">
       <div class="container">
-        <select (change)="changeCam(1)">
+        <!-- <select (change)="changeCam(1)">
           <option value=0 >Cam 1</option> 
           <option value=1>Cam 2</option> 
-        </select>
+        </select> -->
         <video class="input_video" style="display: none" ></video>
-          <canvas class="output_canvas" width="1024px" height="720px"></canvas>
+          <canvas class="output_canvas" width="1280px" height="720px"></canvas>
       </div>
     </div>
     <div class="container" [ngClass]="'safety-compliance'">

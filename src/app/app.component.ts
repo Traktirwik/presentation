@@ -43,6 +43,9 @@ export class AppComponent implements OnInit, AfterViewInit {
   changeCount() {
     this.circleService.changeCount();
   }
+  changeProgress(sum:any) {
+    this.circleService.updateProgress(sum);
+  }
   changeActiveDataSet(chart: 'safety' | 'productivity') {
     this.chartService.changeActiveDataSet(chart);
   }

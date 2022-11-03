@@ -35,10 +35,11 @@ export class MediapipeService {
             }
           });
         }).then(()=>{
-          console.log()
-          navigator.mediaDevices.getUserMedia({audio: false, video: {deviceId:
-            { exact: this.device[0] } //тут меняется вебка
-             }})
+          navigator.mediaDevices.getUserMedia({audio: false, video:true
+            // {deviceId:
+            // { exact: this.device[idCamera] } //тут меняется вебка
+            //  }
+            })
           .then((stream: any) => {
             this.mediaStream = stream
             this.videoElement.srcObject = this.mediaStream;
@@ -51,7 +52,7 @@ export class MediapipeService {
               await holistic.send({image: this.videoElement});
             },
             width: 1280,
-            height: 720
+            height: 960
           })
           this.camera.start();
         })
@@ -118,7 +119,6 @@ export class MediapipeService {
     this.ctx.restore();
   }
   changeCamera(idCamera:number){
-
       const tracks = this.mediaStream.getTracks()
       tracks.forEach((element:any) => {
           element.stop()
@@ -127,7 +127,6 @@ export class MediapipeService {
       this.camera.stop()
       this.camera = null
 setTimeout(()=>{
-
   this.startPoseRecognition(idCamera)
 },2000)
   }
