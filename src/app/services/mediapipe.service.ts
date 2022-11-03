@@ -13,11 +13,13 @@ export class MediapipeService {
   canvasElement: any;
   device: any[] = [];
   camera:any
+  mediaStream:any = null
+  videoElement: any 
   constructor() {
   }
 
   startPoseRecognition(idCamera:number) {
-    const videoElement: any = document.querySelector('.input_video');
+    this.videoElement = document.querySelector('.input_video');
     this.canvasElement = document.querySelector('.output_canvas');
     this.ctx = this.canvasElement.getContext('2d');
 
@@ -33,15 +35,20 @@ export class MediapipeService {
             }
           });
         }).then(()=>{
+          console.log()
           navigator.mediaDevices.getUserMedia({audio: false, video: {deviceId:
-            { exact: this.device[idCamera] } //тут меняется вебка
-             }}).then((stream: any) => {
-            videoElement.srcObject = stream;
+            { exact: this.device[0] } //тут меняется вебка
+             }})
+          .then((stream: any) => {
+            this.mediaStream = stream
+            this.videoElement.srcObject = this.mediaStream;
+
           })
-        }).then(()=>{
-          this.camera = new Camera(videoElement, {
+        })
+        .then(()=>{
+          this.camera = new Camera(this.videoElement, {
             onFrame: async () => {
-              await holistic.send({image: videoElement});
+              await holistic.send({image: this.videoElement});
             },
             width: 1280,
             height: 720
@@ -112,8 +119,16 @@ export class MediapipeService {
   }
   changeCamera(idCamera:number){
 
+      const tracks = this.mediaStream.getTracks()
+      tracks.forEach((element:any) => {
+          element.stop()
+      });
+      this.mediaStream = null
       this.camera.stop()
+      this.camera = null
+setTimeout(()=>{
 
-    this.startPoseRecognition(idCamera)
+  this.startPoseRecognition(idCamera)
+},2000)
   }
 }

@@ -35,12 +35,10 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.chartService.getProductivityChart.subscribe((data: any) => {
       this.productivityChart = data;
     })
-
-
   }
 
-  changeCam(){
-    this.mediaPipeService.changeCamera(0)
+  changeCam(id:number){
+    this.mediaPipeService.changeCamera(id)
   }
   changeCount() {
     this.circleService.changeCount();
@@ -51,7 +49,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.circleService.drawGraph()
-    this.mediaPipeService.startPoseRecognition(1);
+    this.mediaPipeService.startPoseRecognition(0);
 
     setTimeout(() => {
       this.chartService.drawChart();
