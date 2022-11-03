@@ -11,7 +11,7 @@ export class MediapipeService {
 
   ctx: any;
   canvasElement: any;
-
+  device: any[] = [];
   constructor() {
   }
 
@@ -20,15 +20,33 @@ export class MediapipeService {
     this.canvasElement = document.querySelector('.output_canvas');
     this.ctx = this.canvasElement.getContext('2d');
 
-    navigator.mediaDevices.getUserMedia({audio: false, video: true}).then((stream: any) => {
+    if (!navigator.mediaDevices || !navigator.mediaDevices.enumerateDevices) {
+      console.log("enumerateDevices() not supported.");
+    } else {
+      // List cameras and microphones.
+      navigator.mediaDevices.enumerateDevices()
+        .then((devices) => {
+          devices.forEach((device) => {
+            this.device.push(device.deviceId);
+            console.log(device)
+          });
+        })
+        .catch((err) => {
+          console.log(`${err.name}: ${err.message}`);
+        });
+    }
+
+    navigator.mediaDevices.getUserMedia({audio: false, video: {deviceId: "218cfff2533651d7149bc13a9593927d384df528569062f92fa1c58e11d5bc65"}}).then((stream: any) => {
       videoElement.srcObject = stream;
     })
 
+   
     const holistic = new Holistic({
       locateFile: (file) => {
         return `https://cdn.jsdelivr.net/npm/@mediapipe/holistic/${file}`;
       }
     });
+
     holistic.setOptions({
       selfieMode: true,
       modelComplexity: 1,
@@ -47,8 +65,8 @@ export class MediapipeService {
       onFrame: async () => {
         await holistic.send({image: videoElement});
       },
-      width: 1000,
-      height: 600
+      width: 1280,
+      height: 720
     })
     camera.start();
   }
@@ -75,17 +93,17 @@ export class MediapipeService {
 
     this.ctx.globalCompositeOperation = 'source-over';
     drawConnectors(this.ctx, allVisibleLandmarks, POSE_CONNECTIONS,
-      {color: 'white', lineWidth: 5});
+      {color: 'white', lineWidth: 4});
     drawLandmarks(this.ctx, allVisibleLandmarks,
-      {color: 'yellow', radius: 10});
+      {color: 'white', radius: 5});
     drawConnectors(this.ctx, results.leftHandLandmarks, HAND_CONNECTIONS,
-      {color: 'white', lineWidth: 4});
+      {color: 'white', lineWidth: 3});
     drawLandmarks(this.ctx, results.leftHandLandmarks,
-      {color: 'orange', radius: 4});
+      {color: 'yellow', radius: 3});
     drawConnectors(this.ctx, results.rightHandLandmarks, HAND_CONNECTIONS,
-      {color: 'white', lineWidth: 4});
+      {color: 'white', lineWidth: 3});
     drawLandmarks(this.ctx, results.rightHandLandmarks,
-      {color: 'gold', radius: 4});
+      {color: 'yellow', radius: 3});
     this.ctx.restore();
   }
 }
