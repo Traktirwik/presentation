@@ -1,7 +1,6 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {Camera} from '@mediapipe/camera_utils';
 import {HAND_CONNECTIONS, Holistic, POSE_CONNECTIONS} from '@mediapipe/holistic';
-
 import {Chart, registerables} from 'chart.js';
 import 'chartjs-adapter-moment'
 import {MediapipeService} from "./services/mediapipe.service";

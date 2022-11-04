@@ -196,12 +196,12 @@ export class ChartService {
             stacked: true,
             type: 'realtime',
             realtime: {
-              duration: 10000,
+              duration: 20000,
               refresh: 1000,
               delay: 500,
               onRefresh: () => {
                 this.onRefresh('safety');
-              }
+              },
             }
           },
           y: {
@@ -209,7 +209,8 @@ export class ChartService {
             min: -1,
             max: 1,
             ticks: {
-              stepSize: 1
+              stepSize: 1,
+              display: false
             }
           }
         },
@@ -236,7 +237,7 @@ export class ChartService {
             stacked: true,
             type: 'realtime',
             realtime: {
-              duration: 10000,
+              duration: 20000,
               refresh: 1000,
               delay: 500,
               onRefresh: () => {
@@ -249,7 +250,8 @@ export class ChartService {
             min: -1,
             max: 1,
             ticks: {
-              stepSize: 1
+              stepSize: 1,
+              display: false
             }
           }
         },
