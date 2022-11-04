@@ -29,19 +29,24 @@
     <div class="container" [ngClass]="'video'">
       <div class="container">
         <select (change)="changeCam($any($event.target).value)">
-          <option [value]="i" *ngFor="let item of device; let i=index">  
+          <option [value]="i" *ngFor="let item of device; let i=index">
             Cam {{i + 1}}
           </option>
         </select>
         <video class="input_video" style="display: none" ></video>
-          <canvas class="output_canvas" width="1280px" height="720px"></canvas>
+          <canvas class="output_canvas" width="1024px" height="720px"></canvas>
       </div>
     </div>
     <div class="container" [ngClass]="'safety-compliance'">
-      <div class="chart-title-container">
-        Safety compliance
+      <div class="left-block">
+        <div class="chart-title-container">
+          Safety compliance
+        </div>
+        <div class="chart-container">
+          <canvas id="canv" class="canv"></canvas>
+        </div>
       </div>
-      <div class="chart-content-container">
+      <div class="right-block">
         <div class="dataset-title-container" *ngFor="let chart of safetyChart">
           <div class="names-container">
             <div class="dataset-name">{{chart.chart}}</div>
@@ -52,17 +57,19 @@
           </div>
         </div>
       </div>
-
-      <div class="chart-container">
-        <canvas id="canv" class="canv"></canvas>
-      </div>
       <button (click)="changeActiveDataSet('safety')" class="chart-button">change line</button>
     </div>
     <div class="container" [ngClass]="'productivity'">
-      <div class="chart-title-container">
-        Productivity
+      <div class="left-block">
+        <div class="chart-title-container">
+          Productivity
+        </div>
+        <div class="chart-container">
+          <canvas id="prod-canv" class="canv"></canvas>
+        </div>
       </div>
-      <div class="chart-content-container">
+
+      <div class="right-block">
         <div class="dataset-title-container" *ngFor="let chart of productivityChart">
           <div class="names-container">
             <div class="dataset-name">{{chart.chart}}</div>
@@ -72,10 +79,6 @@
             <div class="dataset-time" [ngClass]="chart.chart === 'Productive' ? 'Compliance' : 'Violation'">{{chart.title}}</div>
           </div>
         </div>
-      </div>
-
-      <div class="chart-container">
-        <canvas id="prod-canv" class="canv"></canvas>
       </div>
       <button (click)="changeActiveDataSet('productivity')" class="chart-button">change line</button>
     </div>

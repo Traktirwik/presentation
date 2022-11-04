@@ -3,12 +3,11 @@ import {Camera} from '@mediapipe/camera_utils';
 import {HAND_CONNECTIONS, Holistic, POSE_CONNECTIONS} from '@mediapipe/holistic';
 
 import {Chart, registerables} from 'chart.js';
-import 'chartjs-adapter-moment';
-import ChartStreaming from 'chartjs-plugin-streaming';
-import {drawConnectors, drawLandmarks} from '@mediapipe/drawing_utils';
+import 'chartjs-adapter-moment'
 import {MediapipeService} from "./services/mediapipe.service";
 import {ChartService} from "./services/chart.service";
-import { CircleService } from './services/circle.service';
+import {CircleService} from './services/circle.service';
+import {AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument} from "@angular/fire/compat/firestore";
 
 @Component({
   selector: 'app-root',
@@ -20,11 +19,12 @@ export class AppComponent implements OnInit, AfterViewInit {
   safetyChart: any;
   productivityChart: any;
   device: any = [];
-  
+
   constructor(
     private mediaPipeService: MediapipeService,
     private chartService: ChartService,
-    private circleService: CircleService
+    private circleService: CircleService,
+    private firestore: AngularFirestore,
   ) {
   }
 
@@ -35,6 +35,23 @@ export class AppComponent implements OnInit, AfterViewInit {
 
     this.chartService.getProductivityChart.subscribe((data: any) => {
       this.productivityChart = data;
+    })
+
+    const callDocCollection = this.firestore.collection('events');
+    const productivityCollection = callDocCollection.doc('productivity');
+    const safetyCollection = callDocCollection.doc('safety');
+    const processCollection = callDocCollection.doc('process');
+
+    productivityCollection.valueChanges().subscribe((data: any) => {
+      console.log(data);
+    })
+
+    safetyCollection.valueChanges().subscribe((data) => {
+      console.log(data);
+    })
+
+    processCollection.valueChanges().subscribe((data) => {
+      console.log(data);
     })
 
     this.mediaPipeService.device.subscribe((data: string[]) => {
@@ -63,8 +80,6 @@ export class AppComponent implements OnInit, AfterViewInit {
       this.chartService.drawChart();
     }, 2000)
   }
-
-
 }
 
 
