@@ -10,8 +10,8 @@
     font-family: 'Roboto';
     font-style: normal;
     font-weight: 600;
-    font-size: 24px;
-    line-height: 28px;
+    font-size: 30px;
+    line-height: 32px;
     display: flex;
     align-items: center;
 
@@ -117,8 +117,8 @@
           font-family: 'Roboto';
           font-style: normal;
           font-weight: 600;
-          font-size: 24px;
-          line-height: 28px;
+          font-size: 30px;
+          line-height: 32px;
         }
 
         .chart-container {
@@ -204,4 +204,5 @@
   height: 100%;
   width: 100%;
   box-sizing: border-box;
+  object-fit: contain;
 }
