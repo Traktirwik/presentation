@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {drawConnectors, drawLandmarks} from "@mediapipe/drawing_utils";
 import {HAND_CONNECTIONS, Holistic, POSE_CONNECTIONS} from "@mediapipe/holistic";
 import {Camera} from "@mediapipe/camera_utils";
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -11,11 +12,19 @@ export class MediapipeService {
 
   ctx: any;
   canvasElement: any;
-  device: any[] = [];
+  device = new BehaviorSubject<string[]>([])
   camera:any
   mediaStream:any = null
   videoElement: any 
   constructor() {
+  }
+
+  get getDevices() {
+    return this.device.asObservable();
+  }
+
+  setDevices(devices: string[]) {
+    this.device.next(devices);
   }
 
   startPoseRecognition(idCamera:number) {
@@ -29,16 +38,18 @@ export class MediapipeService {
       // List cameras and microphones.
       navigator.mediaDevices.enumerateDevices()
         .then((devices) => {
+          const devBuf:any = []
           devices.forEach((device) => {
             if(device.kind==='videoinput'){
-              this.device.push(device.deviceId);
+              devBuf.push(device.deviceId);
             }
           });
+          this.setDevices(devBuf);
         }).then(()=>{
-          navigator.mediaDevices.getUserMedia({audio: false, video:true
-            // {deviceId:
-            // { exact: this.device[idCamera] } //тут меняется вебка
-            //  }
+          navigator.mediaDevices.getUserMedia({audio: false, video: //true
+            {deviceId:
+            { exact: this.device.value[idCamera] } //тут меняется вебка
+             }
             })
           .then((stream: any) => {
             this.mediaStream = stream
@@ -91,6 +102,7 @@ export class MediapipeService {
       .map((e: any, index: number) => (index > 10 && index < 17) || (index > 22) ? e : {...e, visibility: 0})
     this.ctx.save();
     if (this.canvasElement) {
+      this.ctx.save()
       this.ctx.clearRect(0, 0, this.canvasElement.width, this.canvasElement.height);
       // Only overwrite existing pixels.
       this.ctx.globalCompositeOperation = 'source-in';
@@ -126,8 +138,9 @@ export class MediapipeService {
       this.mediaStream = null
       this.camera.stop()
       this.camera = null
+      
 setTimeout(()=>{
   this.startPoseRecognition(idCamera)
-},2000)
+},200)
   }
 }

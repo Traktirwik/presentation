@@ -19,7 +19,8 @@ export class AppComponent implements OnInit, AfterViewInit {
   title = 'triggers';
   safetyChart: any;
   productivityChart: any;
-
+  device: any = [];
+  
   constructor(
     private mediaPipeService: MediapipeService,
     private chartService: ChartService,
@@ -35,9 +36,13 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.chartService.getProductivityChart.subscribe((data: any) => {
       this.productivityChart = data;
     })
+
+    this.mediaPipeService.device.subscribe((data: string[]) => {
+      this.device = data;
+    })
   }
 
-  changeCam(id:number){
+  changeCam(id:any){
     this.mediaPipeService.changeCamera(id)
   }
   changeCount() {
