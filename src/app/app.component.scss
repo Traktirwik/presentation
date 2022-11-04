@@ -24,7 +24,7 @@
     padding: 30px 20px 0;
     box-sizing: border-box;
     width: calc(100% - 60px);
-    max-height: calc(100vh - 100px);
+    max-height: calc(100vh - 30px);
     display: grid;
     grid-template-columns: 40% 5% 5% 50%;
     grid-template-rows: 58% 42%;
@@ -113,7 +113,7 @@
 
       .left-block {
         .chart-title-container {
-          margin-bottom: 70px;
+          margin-bottom: 30px;
           font-family: 'Roboto';
           font-style: normal;
           font-weight: 600;
@@ -187,10 +187,6 @@
         gap: 70px;
         margin-bottom: 5px;
 
-        .chart-container {
-          width: 360px;
-        }
-
         .chart-button {
           width: 60px;
           height: 40px;
@@ -199,12 +195,13 @@
         }
       }
 
-      .output_canvas {
-        border-radius: 20px;
-        height: 100%;
-        width: 100%;
-        box-sizing: border-box;
-      }
+     
     }
   }
+}
+.output_canvas {
+  border-radius: 20px;
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
 }
