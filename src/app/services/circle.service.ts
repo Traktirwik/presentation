@@ -36,7 +36,7 @@ this.myDoughnutChart = new Chart(document.getElementById('circle'), {
   data: this.data,
   options: {
   	responsive: true,
-    radius:'80%',
+    radius:'75%',
     cutout:'90%',
     legend: {
       display: false
@@ -62,7 +62,7 @@ befDraw(chart:any) {
   ctx.fillStyle = "#9E9E9E";
   const text2 = 'Count',
   textX2= Math.round((width - ctx.measureText(text2).width) / 2),
-  textY2 = height / 4;   
+  textY2 = height / 3.5;   
   ctx.fillText(text2, textX2, textY2);
 
   ctx.font = fontSize + "em sans-serif";

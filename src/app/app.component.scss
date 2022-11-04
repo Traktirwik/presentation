@@ -14,7 +14,7 @@
     line-height: 32px;
     display: flex;
     align-items: center;
-
+    position: absolute;
     .title-gray {
       color: #9E9E9E;
     }
@@ -66,8 +66,8 @@
       display: flex;
       position: absolute;
       gap: 4px;
-      right: 15px;
-      top: 15px;
+      left:45%;
+      bottom: 25px;
     }
 
     .circle {
@@ -195,7 +195,6 @@
         }
       }
 
-     
     }
   }
 }
@@ -205,4 +204,13 @@
   width: 100%;
   box-sizing: border-box;
   object-fit: contain;
+}
+.progress_ok{
+  border-radius: 5px;
+    background-color: #469F15;
+  }
+
+.progress_wait{
+  border-radius: 5px;
+  background-color: #E0E0E0;
 }
