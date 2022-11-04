@@ -62,8 +62,8 @@ export class MediapipeService {
             onFrame: async () => {
               await holistic.send({image: this.videoElement});
             },
-            width: 1280,
-            height: 960
+            width: 1024,
+            height: 720
           })
           this.camera.start();
         })
