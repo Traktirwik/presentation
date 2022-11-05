@@ -90,7 +90,7 @@
       grid-column-start: 2;
       grid-column-end: 5;
       overflow: hidden;
-      
+
     }
 
     &.safety-compliance {
@@ -140,10 +140,10 @@
             font-family: 'Roboto';
             font-style: normal;
             font-weight: 500;
-            font-size: 24px;
+            font-size: 30px;
             line-height: 24px;
             color: #666666;
-            margin-bottom: 5px;
+            margin-bottom: 10px;
           }
 
           .timing-container {
@@ -194,7 +194,6 @@
           position: absolute;
         }
       }
-
     }
   }
 }
