@@ -62,7 +62,7 @@ export class MediapipeService {
             onFrame: async () => {
               await holistic.send({image: this.videoElement});
             },
-            width: 1024,
+            width: 1124,
             height: 720
           })
           this.camera.start();
@@ -99,8 +99,9 @@ export class MediapipeService {
       ...el,
       visibility: 1
     } : el)
-      .map((e: any, index: number) => (index > 10 && index < 17) || (index > 22) ? e : {...e, visibility: 0})
-    this.ctx.save();
+      .map((e: any, index: number) => (index > 10 && index < 17) || (index > 22)  ? e : {...e, visibility: 0})
+      console.log(allVisibleLandmarks)
+      this.ctx.save();
     if (this.canvasElement) {
       this.ctx.save()
       this.ctx.clearRect(0, 0, this.canvasElement.width, this.canvasElement.height);
@@ -114,7 +115,6 @@ export class MediapipeService {
       this.ctx.drawImage(
         results.image, 0, 0, this.canvasElement.width, this.canvasElement.height);
     }
-
     this.ctx.globalCompositeOperation = 'source-over';
     drawConnectors(this.ctx, allVisibleLandmarks, POSE_CONNECTIONS,
       {color: 'white', lineWidth: 4});

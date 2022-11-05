@@ -60,6 +60,7 @@
       letter-spacing: 0.1px;
       outline: none;
       border: none;
+      z-index: 2;
     }
 
     .circle_progress {
@@ -83,11 +84,11 @@
 
     &.operation-counter {
       grid-column-start: 1;
-      grid-column-end: 2;
+      grid-column-end: 3;
     }
 
     &.video {
-      grid-column-start: 2;
+      grid-column-start: 3;
       grid-column-end: 5;
       overflow: hidden;
 
@@ -182,18 +183,6 @@
         }
       }
 
-      .chart-content-container {
-        display: flex;
-        gap: 70px;
-        margin-bottom: 5px;
-
-        .chart-button {
-          width: 60px;
-          height: 40px;
-          align-self: flex-end;
-          position: absolute;
-        }
-      }
     }
   }
 }
@@ -203,6 +192,7 @@
   width: 100%;
   box-sizing: border-box;
   object-fit: contain;
+  transform: scale(1.13);
 }
 .progress_ok{
   border-radius: 5px;
@@ -212,4 +202,17 @@
 .progress_wait{
   border-radius: 5px;
   background-color: #E0E0E0;
+}
+
+.chart-content-container {
+  display: flex;
+  gap: 70px;
+  margin-bottom: 5px;
+
+  .chart-button {
+    width: 60px;
+    height: 40px;
+    align-self: flex-end;
+    position: absolute;
+  }
 }
